@@ -1,6 +1,6 @@
 #include "partie.h"
 
-int deroulement_tour(struct Partie * variable_partie)
+int deroulement_tour(DonneesPartie * variable_partie)
 {
     do
     {
@@ -46,7 +46,7 @@ int deroulement_tour(struct Partie * variable_partie)
 int lancement_partie()
 {
     // Initialisation de la structure
-    struct Partie variable_partie = {0,0,{0},{0},{0},{0},0,0};
+    DonneesPartie variable_partie = {0,0,{0},{0},{0},{0},0,0};
 
     variable_partie.nombre_joueur = choix_nombre_joueur();
     generation_terrain(variable_partie.nombre_joueur, variable_partie.plateau);

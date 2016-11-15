@@ -6,9 +6,11 @@ CONFIG -= qt
 SOURCES += main.c \
     utilitaire.c \
     jeu.c \
-    partie.c
+    partie.c \
+    donnees_partie.c
 
 HEADERS += \
     utilitaire.h \
     jeu.h \
-    partie.h
+    partie.h \
+    donnees_partie.h

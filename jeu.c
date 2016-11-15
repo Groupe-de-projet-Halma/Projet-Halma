@@ -24,7 +24,7 @@ void selection_coordonne(int tableau_coord[2])
     } while (tableau_coord[1] < 0 || tableau_coord[1] >= TAILLE_PLATEAU);
 }
 
-int deplacer_pion(struct Partie *variable_partie)
+int deplacer_pion(DonneesPartie *variable_partie)
 {
     int ecart_x = variable_partie->coord_destination_pion[0] - variable_partie->coord_pion_selectionner[0];
     int ecart_y = variable_partie->coord_destination_pion[1] - variable_partie->coord_pion_selectionner[1];

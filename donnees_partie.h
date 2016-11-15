@@ -1,11 +1,9 @@
-#ifndef PARTIE_H
-#define PARTIE_H
+#ifndef DONNNEES_PARTIE_H
+#define DONNNEES_PARTIE_H
 
 #include "utilitaire.h"
-#include "donnees_partie.h"
-#include "jeu.h"
-/*
-struct Partie
+
+typedef struct
 {
     int num_joueur;
     int nombre_joueur;
@@ -15,10 +13,9 @@ struct Partie
     int coord_destination_pion[2];
     int pion_sauter;
     int resultat_deplacement;
-};
-*/
+}DonneesPartie;
 
-int lancement_partie();
-int deroulement_tour(DonneesPartie * variable_partie);
+// fonction de sauvegarde
+// fonction chargement
 
 #endif
