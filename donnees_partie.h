@@ -1,10 +1,10 @@
 #ifndef DONNNEES_PARTIE_H
 #define DONNNEES_PARTIE_H
 
+#define TAILLE_PLATEAU 10
+
 #include <stdio.h>
 #include <stdlib.h>
-
-#define TAILLE_PLATEAU 10
 
 typedef struct
 {
@@ -18,7 +18,10 @@ typedef struct
     int resultat_deplacement;
 }DonneesPartie;
 
+int char_to_int(char chiffre);
+char int_to_char(int chiffre);
 // fonction de sauvegarde
+void sauvegarde(DonneesPartie * donnes_a_sauvegarder);
 // fonction chargement
 
 #endif

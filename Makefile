@@ -17,3 +17,6 @@ jeu.o: jeu.c
 main.o: main.c
 	gcc -o main.o -c main.c -W -Wall
 
+clear:
+	rm -rf *.o
+
