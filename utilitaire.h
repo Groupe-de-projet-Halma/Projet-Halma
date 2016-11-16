@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#define TAILLE_PLATEAU 10
+#include "donnees_partie.h"
 
 int choix_nombre_joueur();   // Demande le nombre de joueur
 void vider_buffer();         // Vide le buffer pour le scanf

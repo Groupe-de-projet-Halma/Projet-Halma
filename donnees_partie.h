@@ -1,7 +1,7 @@
 #ifndef DONNNEES_PARTIE_H
 #define DONNNEES_PARTIE_H
 
-#include "utilitaire.h"
+#define TAILLE_PLATEAU 10
 
 typedef struct
 {

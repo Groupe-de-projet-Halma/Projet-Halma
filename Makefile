@@ -1,5 +1,6 @@
 Halma-Game: utilitaire.o donnees_partie.o partie.o jeu.o main.o
 	gcc -o Halma-Game utilitaire.o donnees_partie.o partie.o jeu.o main.o
+	rm -rf *.o
 
 utilitaire.o: utilitaire.c
 	gcc -o utilitaire.o -c utilitaire.c -W -Wall

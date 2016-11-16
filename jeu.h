@@ -2,7 +2,6 @@
 #define JEU_H
 
 #include "utilitaire.h"
-#include "donnees_partie.h"
 
 int test_emplacement(int valeur_emplacement, int x, int y, const int plateau[][TAILLE_PLATEAU]);   // Test la valeur de l'emplacement du plateau
 void selection_coordonne(int tableau_coord[]);                                                      // Demande les valeurs et remplis le tableau [X;Y] recuperer
