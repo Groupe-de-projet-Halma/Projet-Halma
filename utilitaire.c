@@ -79,35 +79,30 @@ void afficher_classement(const int classement[4],int nombre_joueur)
 
 }
 
-void generation_pions(int taille, int y_debut, int y_fin, int x_debut, int x_fin, int numero_joueur, int plateau[][TAILLE_PLATEAU])
+void generation_pions(pions_joueur *pions, int plateau[][TAILLE_PLATEAU])
 {
     int x, y;
 
-    for (y = y_debut; y <= y_fin; y ++) //y signifit les ordonnées dans notre PLATEAU
+    for (y = pions->y_debut; y < pions->y_fin; y ++) //y signifit les ordonnées dans notre PLATEAU
     {
 
-        for (x = x_debut; x <= x_fin; x++) //  x signifit les abscisses dans notre PLATEAU
+        for (x = pions->x_debut; x < pions->x_fin; x++) //  x signifit les abscisses dans notre PLATEAU
         {
 
-            plateau [x][y] = numero_joueur; // on change la valeur du PLATEAU
+            plateau [x][y] = pions->numero_joueur; // on change la valeur du PLATEAU
         }
 
         // on fait différentes incrémentations / décrémentations en fonction du joueur pour que les pions soient à la bonne place
-        if (numero_joueur == 1)
-            x_fin --;
 
-        else if (numero_joueur == 2)
-            x_debut --;
+        if (pions->modification == 0)
 
-        else if (numero_joueur == 3)
-            x_debut ++;
+            pions->x_fin += pions->incrementation_x;
 
-        else if (numero_joueur == 4)
-            x_fin ++;
+        else pions->x_debut += pions->incrementation_x;
     }
 }
 
-void generation_terrain(int nombre_joueur,  int plateau[][TAILLE_PLATEAU])
+void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU])
 {
     int taille;
 
@@ -116,14 +111,61 @@ void generation_terrain(int nombre_joueur,  int plateau[][TAILLE_PLATEAU])
         taille = 5;
     else taille = 3;
 
-    // soit on passe 9 en paramètre soit on passe _TAILLE_PLATEAU_ -1 en paramètre : c'est au choix
+    pions_joueur pions_1 = { 
 
-    generation_pions(taille, 0, taille, 0, taille - 1, 1, plateau);
-    generation_pions(taille, 9 - (taille - 1), 9, 9 , 9, 2, plateau);
+	 		   	1,
+			   	0,
+			   	taille,
+			     	0,
+			    	taille,
+			     	0,
+			     	-1
+			      
+			    };
+
+    pions_joueur pions_2 = { 
+
+			     	2,
+			 	TAILLE_PLATEAU - 1,
+				TAILLE_PLATEAU,
+				TAILLE_PLATEAU - taille,
+				TAILLE_PLATEAU,
+				1,
+				-1
+
+			     };
+
+    generation_pions(&pions_1, plateau);
+    generation_pions(&pions_2, plateau);
 
     if (nombre_joueur == 4) {
 
-        generation_pions(taille, 0, taille - 1, 9 - (taille - 1), 9, 3, plateau);
-        generation_pions(taille, 9 - (taille - 1), 9, 0, taille - 3, 4, plateau);
+	pions_joueur pions_3 = { 
+
+				3,
+				TAILLE_PLATEAU - taille,
+				TAILLE_PLATEAU,
+				0,
+				taille,
+				1,
+				1
+
+				};
+
+	pions_joueur pions_4 = {
+				  
+
+				4,
+				0,
+				1,
+				TAILLE_PLATEAU - taille,
+				TAILLE_PLATEAU,
+				0,
+				1
+				
+				};
+
+        generation_pions(&pions_3, plateau);
+        generation_pions(&pions_4, plateau);
     }
 }
