@@ -1,8 +1,6 @@
 #ifndef UTILITAIRE_H
 #define UTILITAIRE_H
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "donnees_partie.h"
 
 typedef struct
