@@ -7,10 +7,12 @@ SOURCES += main.c \
     utilitaire.c \
     jeu.c \
     partie.c \
-    donnees_partie.c
+    donnees_partie.c \
+    menu.c
 
 HEADERS += \
     utilitaire.h \
     jeu.h \
     partie.h \
-    donnees_partie.h
+    donnees_partie.h \
+    menu.h
