@@ -83,22 +83,22 @@ void generation_pions(pions_joueur *pions, int plateau[][TAILLE_PLATEAU])
 {
     int x, y;
 
-    for (y = pions->y_debut; y < pions->y_fin; y ++) //y signifit les ordonnées dans notre PLATEAU
+    for (y = pions->y_debut; y < pions->y_fin; y ++) // y signifit les ordonnées dans notre PLATEAU
     {
 
-        for (x = pions->x_debut; x < pions->x_fin; x++) //  x signifit les abscisses dans notre PLATEAU
+        for (x = pions->x_debut; x < pions->x_fin; x++) // x signifit les abscisses dans notre PLATEAU
         {
 
             plateau [x][y] = pions->numero_joueur; // on change la valeur du PLATEAU
         }
 
-        // on fait différentes incrémentations / décrémentations en fonction du joueur pour que les pions soient à la bonne place
+        
 
-        if (pions->modification == 0)
-
-            pions->x_fin += pions->incrementation_x;
-
-        else pions->x_debut += pions->incrementation_x;
+        if (pions->modification == 0)			//
+							//
+            pions->x_fin += pions->incrementation_x;	// on fait différentes incrémentations / décrémentations en fonction du joueur pour placer les pions en pyramide
+							//
+        else pions->x_debut += pions->incrementation_x;	//
     }
 }
 
@@ -107,32 +107,21 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU])
     int taille;
 
     // initialisation d'une variable taille pour savoir la taille de nos pyramides de pions
+
     if (nombre_joueur == 2)
         taille = 5;
     else taille = 3;
 
-    pions_joueur pions_1 = { 
-
-	 		   	1,
-			   	0,
-			   	taille,
-			     	0,
-			    	taille,
-			     	0,
-			     	-1
-			      
+    pions_joueur pions_1 = {    1,		//numéro du joueur
+				0, taille,	//données des coordonnées x
+				0, taille,	//données des coordonnées y
+			     	0, -1		//données nécessaire au if de generation_pions
 			    };
 
-    pions_joueur pions_2 = { 
-
-			     	2,
-			 	TAILLE_PLATEAU - 1,
-				TAILLE_PLATEAU,
-				TAILLE_PLATEAU - taille,
-				TAILLE_PLATEAU,
-				1,
-				-1
-
+    pions_joueur pions_2 = { 	2,						//numéro du joueur
+			 	TAILLE_PLATEAU - 1, TAILLE_PLATEAU,		//données des coordonnées x
+				TAILLE_PLATEAU - taille, TAILLE_PLATEAU,	//données des coordonnées y
+				1, -1						//données nécessaire au if de generation_pions
 			     };
 
     generation_pions(&pions_1, plateau);
@@ -140,28 +129,16 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU])
 
     if (nombre_joueur == 4) {
 
-	pions_joueur pions_3 = { 
-
-				3,
-				TAILLE_PLATEAU - taille,
-				TAILLE_PLATEAU,
-				0,
-				taille,
-				1,
-				1
-
+	pions_joueur pions_3 = {	3,						//numéro du joueur
+					TAILLE_PLATEAU - taille, TAILLE_PLATEAU,	//données des coordonnées x
+					0, taille,					//données des coordonnées y
+					1, 1						//données nécessaire au if de generation_pions
 				};
 
-	pions_joueur pions_4 = {
-				  
-
-				4,
-				0,
-				1,
-				TAILLE_PLATEAU - taille,
-				TAILLE_PLATEAU,
-				0,
-				1
+	pions_joueur pions_4 = {	4,						//numéro du joueur
+					0, 1,						//données des coordonnées x
+					TAILLE_PLATEAU - taille, TAILLE_PLATEAU,	//données des coordonnées y
+					0, 1						//données nécessaire au if de generation_pions
 				
 				};
 

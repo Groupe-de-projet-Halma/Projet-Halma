@@ -13,7 +13,7 @@ typedef struct
 	int modification;
 	int incrementation_x;
 
-} pions_joueur;
+} pions_joueur;	// Contient les variables nécessaire pour la fonction generation_pion
 
 int choix_nombre_joueur();   // Demande le nombre de joueur
 void vider_buffer();         // Vide le buffer pour le scanf
