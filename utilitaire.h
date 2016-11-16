@@ -1,6 +1,7 @@
 #ifndef UTILITAIRE_H
 #define UTILITAIRE_H
 
+#include "menu.h"
 #include "donnees_partie.h"
 
 typedef struct
@@ -15,8 +16,6 @@ typedef struct
 
 } pions_joueur;	// Contient les variables nécessaire pour la fonction generation_pion
 
-int choix_nombre_joueur();   // Demande le nombre de joueur
-void vider_buffer();         // Vide le buffer pour le scanf
 void clear_console();
 void afficher_plateau(const int plateau[][TAILLE_PLATEAU]);     // Affiche tout le plateau de jeu
 void afficher_classement(const int classement[4], int nombre_joueur);

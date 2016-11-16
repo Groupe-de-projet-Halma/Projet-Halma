@@ -1,12 +1,15 @@
-Halma-Game: utilitaire.o donnees_partie.o partie.o jeu.o main.o
-	gcc -o Halma-Game utilitaire.o donnees_partie.o partie.o jeu.o main.o -Wall
+Halma-Game: menu.o donnees_partie.o utilitaire.o partie.o jeu.o main.o
+	gcc -o Halma-Game menu.o partie.o utilitaire.o donnees_partie.o jeu.o main.o -Wall
 	rm -rf *.o
 
-utilitaire.o: utilitaire.c
-	gcc -o utilitaire.o -c utilitaire.c -Wall
+menu.o: menu.c
+	gcc -o menu.o -c menu.c -Wall
 
 donnees_partie.o: donnees_partie.c
 	gcc -o donnees_partie.o -c donnees_partie.c -Wall
+
+utilitaire.o: utilitaire.c
+	gcc -o utilitaire.o -c utilitaire.c -Wall
 
 partie.o: partie.c
 	gcc -o partie.o -c partie.c -Wall
