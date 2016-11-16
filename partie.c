@@ -46,7 +46,7 @@ int deroulement_tour(DonneesPartie * variable_partie)
 int lancement_partie()
 {
     // Initialisation de la structure
-    DonneesPartie variable_partie = {0,0,{0},{0},{0},{0},0,0};
+    DonneesPartie variable_partie = {0,0,{{0}},{0},{0},{0},0,0};
 
     variable_partie.nombre_joueur = choix_nombre_joueur();
     generation_terrain(variable_partie.nombre_joueur, variable_partie.plateau);
