@@ -34,7 +34,19 @@ void afficher_plateau(const int plateau[][TAILLE_PLATEAU])
         printf("%d| ",y); // affichage coordonnee en ordonnee
         for(x = 0; x < TAILLE_PLATEAU ; x++)
         {
-            printf("%d ",plateau[x][y]); // affichage valeur du tableau
+            if(plateau[x][y] == 0)
+                printf("\033[37m%d \033[0m",plateau[x][y]); // affichage valeur du tableau
+            else if(plateau[x][y] == 1)
+                printf("\033[31m%d \033[0m",plateau[x][y]); // affichage valeur du table
+
+            else if(plateau[x][y] == 2)
+                printf("\033[32m%d \033[0m",plateau[x][y]); // affichage valeur du table
+
+            else if(plateau[x][y] == 3)
+                printf("\033[36m%d \033[0m",plateau[x][y]); // affichage valeur du table
+
+            else if(plateau[x][y] == 4)
+                printf("\033[33m%d \033[0m",plateau[x][y]); // affichage valeur du table
         }
         printf("\n");
     }
