@@ -20,8 +20,8 @@ typedef struct
 
 int char_to_int(char chiffre);
 char int_to_char(int chiffre);
-// fonction de sauvegarde
-void sauvegarde(DonneesPartie * donnes_a_sauvegarder);
-// fonction chargement
+
+int sauvegarde(DonneesPartie * donnes_a_sauvegarder);
+int charger(DonneesPartie * donnes_a_charger);
 
 #endif
