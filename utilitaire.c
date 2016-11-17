@@ -35,18 +35,18 @@ void afficher_plateau(const int plateau[][TAILLE_PLATEAU])
         for(x = 0; x < TAILLE_PLATEAU ; x++)
         {
             if(plateau[x][y] == 0)
-                printf("\033[37m%d \033[0m",plateau[x][y]); // affichage valeur du tableau
+                printf("\033[37m%d \033[0m",plateau[x][y]); // affichage valeur du tableau blanc
             else if(plateau[x][y] == 1)
-                printf("\033[31m%d \033[0m",plateau[x][y]); // affichage valeur du table
+                printf("\033[31m%d \033[0m",plateau[x][y]); // affichage valeur du tableau rouge
 
             else if(plateau[x][y] == 2)
-                printf("\033[32m%d \033[0m",plateau[x][y]); // affichage valeur du table
+                printf("\033[36m%d \033[0m",plateau[x][y]); // affichage valeur du tableau cyan
 
             else if(plateau[x][y] == 3)
-                printf("\033[36m%d \033[0m",plateau[x][y]); // affichage valeur du table
+                printf("\033[32m%d \033[0m",plateau[x][y]); // affichage valeur du tableau vert
 
             else if(plateau[x][y] == 4)
-                printf("\033[33m%d \033[0m",plateau[x][y]); // affichage valeur du table
+                printf("\033[33m%d \033[0m",plateau[x][y]); // affichage valeur du tableau jaune
         }
         printf("\n");
     }
