@@ -87,38 +87,60 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU])
     if (nombre_joueur == 2)
         taille = 5;
     else taille = 3;
+    
 
-    pions_joueur pions_1 = {    1,		//numéro du joueur
-				0, taille,	//données des coordonnées x
-				0, taille,	//données des coordonnées y
-			     	0, -1		//données nécessaire au if de generation_pions
-			    };
+    // Parallelisation de la generation des pions 
+    #pragma omp parallel sections   // sections a traiter en parallele
+    {
+        #pragma omp section // Processus genration joueur 1
+        {
+            printf("[INFO] Generation joueur 1 par le thread: %d\n",omp_get_thread_num() );
+            pions_joueur pions_1 = {    1,      //numéro du joueur
+                                        0, taille,  //données des coordonnées x
+                                        0, taille,  //données des coordonnées y
+                                        0, -1       //données nécessaire au if de generation_pions
+                                    };
+            generation_pions(&pions_1, plateau);
+        }
 
-    pions_joueur pions_2 = { 	2,						//numéro du joueur
-			 	TAILLE_PLATEAU - 1, TAILLE_PLATEAU,		//données des coordonnées x
-				TAILLE_PLATEAU - taille, TAILLE_PLATEAU,	//données des coordonnées y
-				1, -1						//données nécessaire au if de generation_pions
-			     };
+        #pragma omp section // Processus genration joueur 2
+        {
+            printf("[INFO] Generation joueur 2 par le thread: %d\n",omp_get_thread_num() );
+            pions_joueur pions_2 = {    2,                      //numéro du joueur
+                                        TAILLE_PLATEAU - 1, TAILLE_PLATEAU,     //données des coordonnées x
+                                        TAILLE_PLATEAU - taille, TAILLE_PLATEAU,    //données des coordonnées y
+                                        1, -1                       //données nécessaire au if de generation_pions
+                                    };
+            generation_pions(&pions_2, plateau);
+        }
 
-    generation_pions(&pions_1, plateau);
-    generation_pions(&pions_2, plateau);
+        #pragma omp section // Processus genration joueur 3
+        {
+            if (nombre_joueur == 4) // One genere pas si on a pas choidie 4 joueurs
+            {
+                printf("[INFO] Generation joueur 3 par le thread: %d\n",omp_get_thread_num() );
+            	pions_joueur pions_3 = {	3,						//numéro du joueur
+            					           TAILLE_PLATEAU - taille, TAILLE_PLATEAU,	//données des coordonnées x
+            					           0, taille,					//données des coordonnées y
+            					           1, 1						//données nécessaire au if de generation_pions
+        				                };
+                generation_pions(&pions_3, plateau);
+            }
+        }
 
-    if (nombre_joueur == 4) {
+        #pragma omp section // Processus genration joueur 4
+        {
+            if (nombre_joueur == 4) // One genere pas si on a pas choidie 4 joueurs
+            {
+                printf("[INFO] Generation joueur 4 par le thread: %d\n",omp_get_thread_num() );
+            	pions_joueur pions_4 = {	4,						//numéro du joueur
+            	               				0, 1,						//données des coordonnées x
+                        					TAILLE_PLATEAU - taille, TAILLE_PLATEAU,	//données des coordonnées y
+            					           0, 1						//données nécessaire au if de generation_pions
+                				};
 
-	pions_joueur pions_3 = {	3,						//numéro du joueur
-					TAILLE_PLATEAU - taille, TAILLE_PLATEAU,	//données des coordonnées x
-					0, taille,					//données des coordonnées y
-					1, 1						//données nécessaire au if de generation_pions
-				};
-
-	pions_joueur pions_4 = {	4,						//numéro du joueur
-					0, 1,						//données des coordonnées x
-					TAILLE_PLATEAU - taille, TAILLE_PLATEAU,	//données des coordonnées y
-					0, 1						//données nécessaire au if de generation_pions
-				
-				};
-
-        generation_pions(&pions_3, plateau);
-        generation_pions(&pions_4, plateau);
-    }
+                generation_pions(&pions_4, plateau);
+            }
+        }
+    }    
 }

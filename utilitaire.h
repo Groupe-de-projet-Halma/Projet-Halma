@@ -1,6 +1,8 @@
 #ifndef UTILITAIRE_H
 #define UTILITAIRE_H
 
+#include <omp.h>
+
 #include "menu.h"
 #include "donnees_partie.h"
 

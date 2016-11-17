@@ -1,5 +1,5 @@
 Halma-Game: menu.o donnees_partie.o utilitaire.o partie.o jeu.o main.o
-	gcc -o Halma-Game menu.o partie.o utilitaire.o donnees_partie.o jeu.o main.o -Wall
+	gcc -fopenmp -o Halma-Game menu.o partie.o utilitaire.o donnees_partie.o jeu.o main.o -Wall
 	rm -rf *.o
 
 menu.o: menu.c
@@ -9,7 +9,7 @@ donnees_partie.o: donnees_partie.c
 	gcc -o donnees_partie.o -c donnees_partie.c -Wall
 
 utilitaire.o: utilitaire.c
-	gcc -o utilitaire.o -c utilitaire.c -Wall
+	gcc -fopenmp -o utilitaire.o -c utilitaire.c -Wall
 
 partie.o: partie.c
 	gcc -o partie.o -c partie.c -Wall
