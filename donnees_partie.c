@@ -15,7 +15,7 @@ char int_to_char(int chiffre)
 int sauvegarde(DonneesPartie * donnes_a_sauvegarder)
 {
     FILE * fichier_sauvegarde = NULL;
-    fichier_sauvegarde = fopen("partie.save","w");
+    fichier_sauvegarde = fopen("partie.save","w"); // ouverture du fichier de suavegarde
 
     if(fichier_sauvegarde != NULL)
     {
@@ -23,20 +23,20 @@ int sauvegarde(DonneesPartie * donnes_a_sauvegarder)
         {
         	for (int x = 0; x < TAILLE_PLATEAU; x++)
         	{
-        		fprintf(fichier_sauvegarde,"%c",int_to_char(donnes_a_sauvegarder->plateau[x][y]));
+        		fprintf(fichier_sauvegarde,"%c",int_to_char(donnes_a_sauvegarder->plateau[x][y])); // sauvegarde plateau
         	}
-            fprintf(fichier_sauvegarde,"\n");
+            fprintf(fichier_sauvegarde,"\n"); // passage de ligne
         }
 
-        fprintf(fichier_sauvegarde,"%c\n%c\n",int_to_char(donnes_a_sauvegarder->num_joueur),
-        									int_to_char(donnes_a_sauvegarder->nombre_joueur));
+        fprintf(fichier_sauvegarde,"%c\n%c\n",int_to_char(donnes_a_sauvegarder->num_joueur), // sauvegarde numero de joueur
+        									int_to_char(donnes_a_sauvegarder->nombre_joueur)); // sauvegarde nombre de joueur
 
         for (int i = 0; i < 4; i++)
         {
-        	fprintf(fichier_sauvegarde, "%c",int_to_char(donnes_a_sauvegarder->classement[i]) );
+        	fprintf(fichier_sauvegarde, "%c",int_to_char(donnes_a_sauvegarder->classement[i]) ); // sauvegarde classement
         }
 
-        fclose(fichier_sauvegarde);
+        fclose(fichier_sauvegarde); // fermeture du fichier de sauvegarde
         return 1;
     }
 
@@ -50,7 +50,7 @@ int sauvegarde(DonneesPartie * donnes_a_sauvegarder)
 int charger(DonneesPartie * donnes_a_charger)
 {
     FILE * fichier_chargement = NULL;
-    fichier_chargement = fopen("partie.save","r");
+    fichier_chargement = fopen("partie.save","r"); // ouverture du fichier de chargement
 		int x,y,i;
     if (fichier_chargement != NULL)
     {
@@ -71,7 +71,7 @@ int charger(DonneesPartie * donnes_a_charger)
 				donnes_a_charger->classement[i] = char_to_int(fgetc(fichier_chargement)); // chargement classement
 			}
 
-      fclose(fichier_chargement);
+      fclose(fichier_chargement); // fermeture du fichier de chargement
       return 1;
     }
 

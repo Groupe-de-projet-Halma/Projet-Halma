@@ -38,6 +38,8 @@ int deroulement_tour(DonneesPartie * variable_partie)
                 variable_partie->resultat_deplacement = 1;
 
     }while (variable_partie->resultat_deplacement != 1); // Tant que le deplacement n'est pas valide
+    variable_partie->pion_sauter = 0;
+    variable_partie->resultat_deplacement = 0;
 
     /* test victoire et retourne la valeur du test (idee) */
     return 0;
@@ -50,14 +52,18 @@ int lancement_partie()
 
     variable_partie.nombre_joueur = choix_nombre_joueur();
     generation_terrain(variable_partie.nombre_joueur, variable_partie.plateau);
+    
+    do
+    {
+      /*** Faire une boucle tant que tout les joueur n'ont pas fini ***/
+      variable_partie.num_joueur = joueur_suivant(variable_partie.nombre_joueur,
+                                  variable_partie.num_joueur,
+                                  variable_partie.classement);
 
-    /*** Faire une boucle tant que tout les joueur n'ont pas fini ***/
-    variable_partie.num_joueur = joueur_suivant(variable_partie.nombre_joueur,
-                                variable_partie.num_joueur,
-                                variable_partie.classement); // le num_joueur passe a 1
+      deroulement_tour(&variable_partie);
+      sauvegarde(&variable_partie);
+    }while(1);
 
-    deroulement_tour(&variable_partie);
-    /*****************************************************************/
 
     // fin du jeu
     afficher_plateau(variable_partie.plateau);
