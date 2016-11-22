@@ -2,6 +2,10 @@ Halma-Game: menu.o donnees_partie.o utilitaire.o partie.o jeu.o main.o
 	gcc -fopenmp -o Halma-Game menu.o partie.o utilitaire.o donnees_partie.o jeu.o main.o -Wall
 	rm -rf *.o
 
+windows: menu.o donnees_partie.o utilitaire.o partie.o jeu.o main.o
+	gcc -fopenmp -o Halma-Game menu.o partie.o utilitaire.o donnees_partie.o jeu.o main.o -Wall
+	del *.o
+
 menu.o: menu.c
 	gcc -o menu.o -c menu.c -Wall
 
@@ -22,4 +26,3 @@ main.o: main.c
 
 clear:
 	rm -rf *.o
-
