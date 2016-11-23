@@ -73,7 +73,12 @@ int deplacer_pion(DonneesPartie *variable_partie)
         if (test_emplacement(0,
                              variable_partie->coord_pion_selectionner[0] + ecart_x,
                              variable_partie->coord_pion_selectionner[1] + ecart_y,
-                             variable_partie->plateau) == 0)
+                             variable_partie->plateau) == 0
+            &&
+            test_emplacement(0,
+                             variable_partie->coord_destination_pion[0],
+                             variable_partie->coord_destination_pion[1],
+                             variable_partie->plateau) == 1)
         {
             variable_partie->plateau[variable_partie->coord_destination_pion[0]][variable_partie->coord_destination_pion[1]] = variable_partie->num_joueur;
             variable_partie->plateau[variable_partie->coord_pion_selectionner[0]][variable_partie->coord_pion_selectionner[1]] = 0;
