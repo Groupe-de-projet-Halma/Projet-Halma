@@ -16,12 +16,13 @@ int sauvegarde(DonneesPartie * donnes_a_sauvegarder)
 {
     FILE * fichier_sauvegarde = NULL;
     fichier_sauvegarde = fopen("partie.save","w"); // ouverture du fichier de suavegarde
+		int x,y,i;
 
     if(fichier_sauvegarde != NULL)
     {
-        for (int y = 0; y < TAILLE_PLATEAU; y++)
+        for (y = 0; y < TAILLE_PLATEAU; y++)
         {
-        	for (int x = 0; x < TAILLE_PLATEAU; x++)
+        	for (x = 0; x < TAILLE_PLATEAU; x++)
         	{
         		fprintf(fichier_sauvegarde,"%c",int_to_char(donnes_a_sauvegarder->plateau[x][y])); // sauvegarde plateau
         	}
@@ -31,7 +32,7 @@ int sauvegarde(DonneesPartie * donnes_a_sauvegarder)
         fprintf(fichier_sauvegarde,"%c\n%c\n",int_to_char(donnes_a_sauvegarder->num_joueur), // sauvegarde numero de joueur
         									int_to_char(donnes_a_sauvegarder->nombre_joueur)); // sauvegarde nombre de joueur
 
-        for (int i = 0; i < 4; i++)
+        for (i = 0; i < 4; i++)
         {
         	fprintf(fichier_sauvegarde, "%c",int_to_char(donnes_a_sauvegarder->classement[i]) ); // sauvegarde classement
         }
