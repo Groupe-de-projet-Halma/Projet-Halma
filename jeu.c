@@ -140,18 +140,23 @@ void generation_classement(DonneesPartie *variable_partie) // Remplis le tableau
     else total = 10;
 
   for (i = 0; i < variable_partie->nombre_joueur; i++) {
-    if (variable_partie->classement[i] == 0) // Si le tableau ne contient pas de valeur on le remplit avec le numéro du joueur
+    if (variable_partie->classement[i] == 0)  // Si le tableau ne contient pas de valeur on le remplit avec le numéro du joueur
+    {
       variable_partie->classement[i] = variable_partie->num_joueur;
-      break;
-  }
 
-  if (variable_partie->classement[variable_partie->nombre_joueur - 1] != 0) // On regarde si on a mis l'avant dernier joueur dans le tableau pour ajouter le dernier
-    variable_partie->classement[variable_partie->nombre_joueur] = total - somme_classement(&variable_partie);
+      if (variable_partie->classement[variable_partie->nombre_joueur - 2] != 0) // On regarde si on a mis l'avant dernier joueur dans le tableau pour ajouter le dernier
+      {
+        variable_partie->classement[variable_partie->nombre_joueur - 1] = total - somme_classement(variable_partie);
+      }
+      
+    break;
+    }
+  }
 }
 
 int somme_classement(DonneesPartie *variable_partie)  // Fait la somme des valeurs de toutes les cases du tableau classement
 {
-  int i, somme;
+  int i, somme = 0;
 
   for (i = 0; i < variable_partie->nombre_joueur - 1; i++) {
     somme += variable_partie->classement[i];
@@ -168,9 +173,8 @@ void fin_joueur(Test_fin *fin, DonneesPartie *variable_partie)  // Test si le jo
     {
         for (x = fin->x_debut; x < fin->x_fin; x++) // x signifit les abscisses dans notre PLATEAU
         {
-          if (variable_partie->plateau[x][y] == variable_partie->num_joueur) // On test si les pions du joueur sont bien sur les emplacements pour qu'il ait fini
-            test = 0;
-            else test = 1;
+          if (variable_partie->plateau[x][y] != variable_partie->num_joueur) // On test si les pions du joueur sont bien sur les emplacements pour qu'il ait fini
+              test ++;
         }
 
         if (fin->modification == 0)		// On fait différentes incrémentations / décrémentations en fonction du joueur pour tester nos pyramides de pions
@@ -179,7 +183,7 @@ void fin_joueur(Test_fin *fin, DonneesPartie *variable_partie)  // Test si le jo
 
         else fin->x_debut += fin->incrementation_x;
     }
-
+    printf("%d\n", test);
     if (test == 0) // si test = 0 alors le joueur à fini
-      generation_classement(&variable_partie);
+      generation_classement(variable_partie);
 }

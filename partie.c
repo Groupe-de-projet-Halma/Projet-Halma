@@ -4,7 +4,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
 {
     do
     {
-        clear_console();
+        //clear_console();
         afficher_plateau(variable_partie->plateau);
         printf("JOUEUR %d a vous de jouer ! \n\n",variable_partie->num_joueur);
 
@@ -46,7 +46,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
     // Initialisation d'une variable taille pour savoir la taille de nos pyramides à tester
     int taille;
 
-    if (variable_partie->num_joueur == 2)
+    if (variable_partie->nombre_joueur == 2)
       taille = 5;
       else taille = 3;
 
@@ -57,7 +57,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
                             1, -1 // Données nécessaire au if de fin_joueur
                           };
 
-      fin_joueur(&joueur1, &variable_partie);
+      fin_joueur(&joueur1, variable_partie);
 
     } else if (variable_partie->num_joueur == 2) {
 
@@ -66,7 +66,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
                             0, -1 // Données nécessaire au if de fin_joueur
                           };
 
-      fin_joueur(&joueur2, &variable_partie);
+      fin_joueur(&joueur2, variable_partie);
 
     } else if (variable_partie->num_joueur == 3 ) {
 
@@ -75,7 +75,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
                             0, 1  // Données nécessaire au if de fin_joueur
                           };
 
-      fin_joueur(&joueur3, &variable_partie);
+      fin_joueur(&joueur3, variable_partie);
 
     } else if (variable_partie->num_joueur == 4 ) {
 
@@ -84,7 +84,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
                             1, 1  // Données nécessaire au if de fin_joueur
                           };
 
-      fin_joueur(&joueur4, &variable_partie);
+      fin_joueur(&joueur4, variable_partie);
     }
     return 0;
 }
@@ -96,9 +96,6 @@ int lancement_partie()  // Lance la partie
 
     variable_partie.nombre_joueur = choix_nombre_joueur();
     generation_terrain(variable_partie.nombre_joueur, variable_partie.plateau);
-
-    /* Pour les tests de Camille :*/
-    //charger(&variable_partie);
 
     do // Boucle pour rejouer tant que la partie n'est pas finie
     {
@@ -125,9 +122,11 @@ int fin_partie(DonneesPartie *variable_partie)  // Détermine le moment où la p
 
   for (i = 0; i < variable_partie->nombre_joueur; i++) {
     if (variable_partie->classement[i] != 0)
-      test = 1; // Le tableau classement contient un ou des joueurs
-      else test = 0;
+      test ++; // Le tableau classement contient un ou des joueurs
   }
 
-  return test;  // Si test = 1 alors on a TOUT nos joueurs dans le tableau classement et il faut stopper la partie
+  if (test == variable_partie->nombre_joueur)
+    return 1; // Si test est égale au nombre de joueurs alors on a TOUT nos joueurs dans le tableau classement et il faut stopper la partie
+
+  return 0;
 }
