@@ -1,6 +1,6 @@
 #include "jeu.h"
 
-int test_emplacement(int valeur_emplacement, int x, int y, const int plateau[][TAILLE_PLATEAU]) // Test la valeur de l'emplacement du plateau
+int test_emplacement(int valeur_emplacement, int x, int y, int plateau[][TAILLE_PLATEAU]) // Test la valeur de l'emplacement du plateau
 {
     if (((x >= 0 && x < TAILLE_PLATEAU) && (y >= 0 && y < TAILLE_PLATEAU)) && plateau[x][y] == valeur_emplacement)
         return 1;
@@ -92,7 +92,7 @@ int deplacer_pion(DonneesPartie *variable_partie) // Permet le déplacement d'un
     return 0; // Deplacement impossible
 }
 
-int joueur_suivant(const int nombre_joueur, int numero_joueur, const int classement[])  // Retourne le numero du joueur suivant (MIN = 1 & MAX = 4)
+int joueur_suivant(int nombre_joueur, int numero_joueur, int classement[])  // Retourne le numero du joueur suivant (MIN = 1 & MAX = 4)
 {
     int i,j,cpt = 0,fini = 0;
     numero_joueur++;

@@ -9,7 +9,7 @@ void clear_console()  // Vide la console
     #endif
 }
 
-void afficher_plateau(const int plateau[][TAILLE_PLATEAU])  // Affiche le plateau
+void afficher_plateau(int plateau[][TAILLE_PLATEAU])  // Affiche le plateau
 {
     int x,y,i;
 
@@ -53,7 +53,7 @@ void afficher_plateau(const int plateau[][TAILLE_PLATEAU])  // Affiche le platea
     printf("\n");
 }
 
-void afficher_classement(const int classement[4],int nombre_joueur) // Affiche le classement
+void afficher_classement(int classement[4],int nombre_joueur) // Affiche le classement
 {
     int i;
 
