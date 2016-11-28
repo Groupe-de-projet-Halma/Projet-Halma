@@ -22,6 +22,6 @@ int char_to_int(char chiffre);
 char int_to_char(int chiffre);
 
 int sauvegarde(DonneesPartie * donnes_a_sauvegarder); // sauvegarde la partie
-int charger(DonneesPartie * donnes_a_charger); // chargement de la derniere sauvegarde
+int charger(DonneesPartie * donnees_a_charger); // chargement de la derniere sauvegarde
 
 #endif

@@ -1,13 +1,13 @@
 #include "jeu.h"
 
-int test_emplacement(int valeur_emplacement, int x, int y, const int plateau[][TAILLE_PLATEAU])
+int test_emplacement(int valeur_emplacement, int x, int y, const int plateau[][TAILLE_PLATEAU]) // Test la valeur de l'emplacement du plateau
 {
     if (((x >= 0 && x < TAILLE_PLATEAU) && (y >= 0 && y < TAILLE_PLATEAU)) && plateau[x][y] == valeur_emplacement)
         return 1;
     else return 0;
 }
 
-void selection_coordonne(int tableau_coord[2])
+void selection_coordonne(int tableau_coord[2])  // Demande les valeurs et remplis le tableau [X;Y]
 {
     do
     {
@@ -24,7 +24,7 @@ void selection_coordonne(int tableau_coord[2])
     } while (tableau_coord[1] < 0 || tableau_coord[1] >= TAILLE_PLATEAU);
 }
 
-int deplacer_pion(DonneesPartie *variable_partie)
+int deplacer_pion(DonneesPartie *variable_partie) // Permet le déplacement d'un pion
 {
     int ecart_x = variable_partie->coord_destination_pion[0] - variable_partie->coord_pion_selectionner[0];
     int ecart_y = variable_partie->coord_destination_pion[1] - variable_partie->coord_pion_selectionner[1];
@@ -56,10 +56,10 @@ int deplacer_pion(DonneesPartie *variable_partie)
         }
     }
 
-    // Deplacement sauter pion
+    // Deplacement en sautant un pion
     else if ( ((ecart_x < 3 && ecart_y < 3) && (ecart_x > -3 && ecart_y > -3)) && ((ecart_x != 1 && ecart_x != -1) && (ecart_y != 1 && ecart_y != -1)))
     {
-        // Calcul coordonne obstacle
+        // Calcul des coordonnées de l'obstacle
         if (ecart_x > 0)
             ecart_x = ecart_x - 1;
         else if (ecart_x < 0)
@@ -92,7 +92,7 @@ int deplacer_pion(DonneesPartie *variable_partie)
     return 0; // Deplacement impossible
 }
 
-int joueur_suivant(const int nombre_joueur, int numero_joueur, const int classement[])
+int joueur_suivant(const int nombre_joueur, int numero_joueur, const int classement[])  // Retourne le numero du joueur suivant (MIN = 1 & MAX = 4)
 {
     int i,j,cpt = 0,fini = 0;
     numero_joueur++;
@@ -118,7 +118,7 @@ int joueur_suivant(const int nombre_joueur, int numero_joueur, const int classem
     return 0;
 }
 
-int demande_fin_tour()
+int demande_fin_tour()  // Demmande au joueur si il a fini son tour
 {
     int continuer;
     do
@@ -129,4 +129,57 @@ int demande_fin_tour()
 
     } while (continuer != 0  && continuer != 1); // Test si l'entre est valide
     return continuer;
+}
+
+void generation_classement(DonneesPartie *variable_partie) // Remplis le tableau du classement
+{
+  int i, total;
+
+  if (variable_partie->nombre_joueur == 2) // La variable total sert à savoir quel joueur on ajoute quand tous les joueurs sauf un ont fini
+    total = 3;
+    else total = 10;
+
+  for (i = 0; i < variable_partie->nombre_joueur; i++) {
+    if (variable_partie->classement[i] == 0) // Si le tableau ne contient pas de valeur on le remplit avec le numéro du joueur
+      variable_partie->classement[i] = variable_partie->num_joueur;
+      break;
+  }
+
+  if (variable_partie->classement[variable_partie->nombre_joueur - 1] != 0) // On regarde si on a mis l'avant dernier joueur dans le tableau pour ajouter le dernier
+    variable_partie->classement[variable_partie->nombre_joueur] = total - somme_classement(&variable_partie);
+}
+
+int somme_classement(DonneesPartie *variable_partie)  // Fait la somme des valeurs de toutes les cases du tableau classement
+{
+  int i, somme;
+
+  for (i = 0; i < variable_partie->nombre_joueur - 1; i++) {
+    somme += variable_partie->classement[i];
+  }
+
+  return somme;
+}
+
+void fin_joueur(Test_fin *fin, DonneesPartie *variable_partie)  // Test si le joueur x a fini
+{
+    int x, y, test = 0;
+
+    for (y = fin->y_debut; y < fin->y_fin; y ++) // y signifit les ordonnées dans notre PLATEAU
+    {
+        for (x = fin->x_debut; x < fin->x_fin; x++) // x signifit les abscisses dans notre PLATEAU
+        {
+          if (variable_partie->plateau[x][y] == variable_partie->num_joueur) // On test si les pions du joueur sont bien sur les emplacements pour qu'il ait fini
+            test = 0;
+            else test = 1;
+        }
+
+        if (fin->modification == 0)		// On fait différentes incrémentations / décrémentations en fonction du joueur pour tester nos pyramides de pions
+
+            fin->x_fin += fin->incrementation_x;
+
+        else fin->x_debut += fin->incrementation_x;
+    }
+
+    if (test == 0) // si test = 0 alors le joueur à fini
+      generation_classement(&variable_partie);
 }

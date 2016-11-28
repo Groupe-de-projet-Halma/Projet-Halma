@@ -12,7 +12,7 @@ char int_to_char(int chiffre)
 }
 
 
-int sauvegarde(DonneesPartie * donnes_a_sauvegarder)
+int sauvegarde(DonneesPartie *donnes_a_sauvegarder)
 {
     FILE * fichier_sauvegarde = NULL;
     fichier_sauvegarde = fopen("partie.save","w"); // ouverture du fichier de suavegarde
@@ -48,7 +48,7 @@ int sauvegarde(DonneesPartie * donnes_a_sauvegarder)
     }
 }
 
-int charger(DonneesPartie * donnes_a_charger)
+int charger(DonneesPartie *donnees_a_charger)
 {
     FILE * fichier_chargement = NULL;
     fichier_chargement = fopen("partie.save","r"); // ouverture du fichier de chargement
@@ -59,17 +59,17 @@ int charger(DonneesPartie * donnes_a_charger)
 			{
 				for (x = 0; x < TAILLE_PLATEAU; x++)
 				{
-					donnes_a_charger->plateau[x][y] = char_to_int(fgetc(fichier_chargement)); // chargement plateau
+					donnees_a_charger->plateau[x][y] = char_to_int(fgetc(fichier_chargement)); // chargement plateau
 				}
 				fgetc(fichier_chargement); // Passage de ligne dans le fichier
 			}
-			donnes_a_charger->num_joueur = char_to_int(fgetc(fichier_chargement)); // chargement numero de joueur
+			donnees_a_charger->num_joueur = char_to_int(fgetc(fichier_chargement)); // chargement numero de joueur
 			fgetc(fichier_chargement); // Passage de ligne dans le fichier
-			donnes_a_charger->nombre_joueur = char_to_int(fgetc(fichier_chargement)); //chargement nombre de joueur
+			donnees_a_charger->nombre_joueur = char_to_int(fgetc(fichier_chargement)); //chargement nombre de joueur
 			fgetc(fichier_chargement); // Passage de ligne dans le fichier
 			for (i = 0; i < 4; i++)
 			{
-				donnes_a_charger->classement[i] = char_to_int(fgetc(fichier_chargement)); // chargement classement
+				donnees_a_charger->classement[i] = char_to_int(fgetc(fichier_chargement)); // chargement classement
 			}
 
       fclose(fichier_chargement); // fermeture du fichier de chargement

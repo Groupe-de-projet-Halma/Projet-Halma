@@ -1,6 +1,6 @@
 #include "menu.h"
 
-int choix_nombre_joueur()
+int choix_nombre_joueur() // Demande le nombre de joueur
 {
     int nombre_joueur;
     do
@@ -15,7 +15,7 @@ int choix_nombre_joueur()
 
 }
 
-void vider_buffer()
+void vider_buffer() // Vide le buffer pour le scanf
 {
     int c = 0;
     while (c != '\n' && c != EOF)

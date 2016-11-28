@@ -16,14 +16,14 @@ typedef struct
 	int modification;
 	int incrementation_x;
 
-} pions_joueur;	// Contient les variables nécessaire pour la fonction generation_pion
+} Pions_joueur;	// Contient les variables nécessaire pour la fonction generation_pion
 
 void clear_console();
-void afficher_plateau(const int plateau[][TAILLE_PLATEAU]);     // Affiche tout le plateau de jeu
-void afficher_classement(const int classement[4], int nombre_joueur);
+void afficher_plateau(const int plateau[][TAILLE_PLATEAU]);	// Affiche tout le plateau de jeu
+void afficher_classement(const int classement[4], int nombre_joueur);	// Affiche le classeme
 
-void generation_terrain(int nombre_joueur,  int plateau[][TAILLE_PLATEAU]);   // Place les pions sur leurs emplacements de départ
-void generation_pions(pions_joueur *pions, int plateau[][TAILLE_PLATEAU]);                         // Place les pions du joueur dont on donne le numéro et les coordonnées de ses pions
+void generation_terrain(int nombre_joueur,  int plateau[][TAILLE_PLATEAU]);	// Place les pions sur leurs emplacements de départ
+void generation_pions(Pions_joueur *pions, int plateau[][TAILLE_PLATEAU]);	// Place les pions du joueur dont on donne le numéro et les coordonnées de ses pions
 
 
 #endif
