@@ -1,7 +1,7 @@
 #ifndef JEU_H
 #define JEU_H
 
-#include "menu.h"
+#include "utilitaire.h"
 
 typedef struct
 {

@@ -1,42 +1,7 @@
 #include "menu.h"
 
-void clear_console()  // Vide la console
+void afficher_menu()  // Affiche le menu
 {
-    #ifdef linux  // Si on est sur linux
-        system("clear");
-    #elif _WIN32  // Sinon si on est sur windows
-        system("cls");
-    #endif
-}
-
-int choix_nombre_joueur() // Demande le nombre de joueur
-{
-    int nombre_joueur;
-    do
-    {
-        printf("Entrez le nombre de joueur (2 ou 4): ");
-        if(scanf("%d", &nombre_joueur) != 1) // Test si la valeur est un entier
-            vider_buffer();
-
-    } while (nombre_joueur != 2  && nombre_joueur != 4); // Test si l'entre est valide
-    printf("\nVous avez choisi %d joueurs\n\n", nombre_joueur);
-    return nombre_joueur;
-
-}
-
-void vider_buffer() // Vide le buffer pour le scanf
-{
-    int c = 0;
-    while (c != '\n' && c != EOF)
-    {
-        c = getchar();
-    }
-}
-
-void menu ()  // Menu d'acceuil
-{
-  int choix;
-
   printf("     ***** HALMA GAME *****\n\nby Tancelin MAZZOTTI & Camille LANGE\n\n");
 
   printf("************* MENU ***************\n");
@@ -45,8 +10,18 @@ void menu ()  // Menu d'acceuil
   printf("* 3 : Lire les règles            *\n");
   printf("* 4 : Quitter                    *\n");
   printf("**********************************\n\n");
+}
 
-  do {
+void menu ()  // Menu d'acceuil
+{
+  int choix;
+
+  // Initialisation de la structure nécessaire à notre partie
+  DonneesPartie variable_partie = {0,0,{{0}},{0},{0},{0},0,0};
+
+  afficher_menu();
+
+  do {  // Choix sécurisé
 
     printf("Que choisisez vous ? ");
     if(scanf("%d", &choix) != 1) // Test si la valeur est un entier
@@ -58,38 +33,53 @@ void menu ()  // Menu d'acceuil
 
   if (choix == 1) // Lancement d'une nouvelle partie
   {
-    lancement_partie();
-    recommencer();
+    variable_partie.nombre_joueur = choix_nombre_joueur();
+    generation_terrain(variable_partie.nombre_joueur, variable_partie.plateau);
 
-  } else if (choix == 2)  // Chargement de la dernière partie jouée
-          {
-            // Je ne sais pas comment faire le chargement : on ne peut pas utiliser variable_partie car elle n'est pas initialisé.
-            //charger(&variable_partie);
-            //recommencer();
+    lancement_partie(&variable_partie);
+    recommencer(&variable_partie);
 
-          } else if (choix == 3)  // Exposé des règles du jeu + demande à l'utilisateur si il veux faire une nouvelle partie ou bien reprendre la dernière partie faite
-                  {
-                    regles();
-                    printf("\nVoulez vous faire une nouvelle partie ou bien reprendre la dernière partie faite ? [0 / 1] ");
-                    scanf("%d", &choix);
+  }
+  else if (choix == 2)  // Chargement de la dernière partie jouée
+  {
+    charger(&variable_partie);
+    lancement_partie(&variable_partie);
+    recommencer(&variable_partie);
 
-                    if (choix == 1) // Lancement d'une nouvelle partie
-                    {
-                      lancement_partie();
-                      recommencer();
+  }
+  else if (choix == 3)  // Exposé des règles du jeu + demande à l'utilisateur si il veux faire une nouvelle partie ou bien reprendre la dernière partie faite
+  {
+    regles();
 
-                    } else if (choix == 2)  // Chargement de la dernière partie jouée
-                            {
-                              // Je ne sais pas comment faire le chargement : on ne peut pas utiliser variable_partie car elle n'est pas initialisé.
-                              //charger(&variable_partie);
-                              //recommencer();
-                            }
+    do
+    {
 
-                  } else if (choix == 4)
-                          {
+      printf("\nVoulez vous faire une nouvelle partie ou bien reprendre la dernière partie faite ? [1 : oui / 0 : non] ");
 
-                            clear_console();
-                          }
+      if(scanf("%d", &choix) != 1)  // Test si la valeur est un entier
+          vider_buffer();
+
+      if (choix == 1) // Lancement d'une nouvelle partie
+      {
+        variable_partie.nombre_joueur = choix_nombre_joueur();
+        generation_terrain(variable_partie.nombre_joueur, variable_partie.plateau);
+
+        lancement_partie(&variable_partie);
+        recommencer(&variable_partie);
+
+      }
+      else  // Chargement de la dernière partie jouée
+      {
+        charger(&variable_partie);
+        lancement_partie(&variable_partie);
+        recommencer(&variable_partie);
+      }
+
+     } while (choix != 1 && choix != 0);
+
+  }
+  else if (choix == 4)
+    clear_console();
 }
 
 void regles() // Affiche les règles du jeu
@@ -108,15 +98,20 @@ void regles() // Affiche les règles du jeu
   printf("Bonne chance !\n");
 }
 
-void recommencer()  // Demande si l'utilisateur veux recommencer le jeu
+void recommencer(DonneesPartie *variable_partie)  // Demande si l'utilisateur veux recommencer le jeu
 {
   int recommencer;
 
-  do
+  do  // Test sécurisé
   {
       printf("\nVoulez-vous recommencer le jeu ? (1 = oui et 0 = non): ");
       if(scanf("%d", &recommencer) != 1) // Test si la valeur est un entier
           vider_buffer();
+      if (recommencer == 1) {
+        variable_partie->nombre_joueur = choix_nombre_joueur();
+        generation_terrain(variable_partie->nombre_joueur, variable_partie->plateau);
 
+        lancement_partie(variable_partie);
+      }
   } while (recommencer != 0  && recommencer != 1); // Test si l'entre est valide
 }

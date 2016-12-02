@@ -1,10 +1,9 @@
-#include "partie.h"
+#include "menu.h"
 
-
-int main()
+int main()  // Lance uniquement le menu du jeu
 {
-    clear_console();
-    menu();
+  clear_console();
+  menu();
 
-    return 0;
+  return 0;
 }

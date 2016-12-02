@@ -17,6 +17,10 @@ typedef struct
 
 } Pions_joueur;	// Contient les variables nécessaire pour la fonction generation_pion
 
+void clear_console(); // Vide la console
+int choix_nombre_joueur();  // Demande le nombre de joueur
+void vider_buffer();  // Vide le buffer pour le scanf
+
 void afficher_plateau(int plateau[][TAILLE_PLATEAU]);	// Affiche tout le plateau de jeu
 void afficher_classement(int classement[4], int nombre_joueur);	// Affiche le classement
 

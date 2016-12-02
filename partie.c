@@ -89,28 +89,22 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
     return 0;
 }
 
-int lancement_partie()  // Lance la partie
+int lancement_partie(DonneesPartie *variable_partie)  // Lance la partie
 {
-    // Initialisation de la structure
-    DonneesPartie variable_partie = {0,0,{{0}},{0},{0},{0},0,0};
-
-    variable_partie.nombre_joueur = choix_nombre_joueur();
-    generation_terrain(variable_partie.nombre_joueur, variable_partie.plateau);
-
     do // Boucle pour rejouer tant que la partie n'est pas finie
     {
-      variable_partie.num_joueur = joueur_suivant(variable_partie.nombre_joueur,
-                                  variable_partie.num_joueur,
-                                  variable_partie.classement);
+      variable_partie->num_joueur = joueur_suivant(variable_partie->nombre_joueur,
+                                  variable_partie->num_joueur,
+                                  variable_partie->classement);
 
-      deroulement_tour(&variable_partie);
-      sauvegarde(&variable_partie);
-    } while(fin_partie(&variable_partie) == 0);
+      deroulement_tour(variable_partie);
+      sauvegarde(variable_partie);
+    } while(fin_partie(variable_partie) == 0);
 
     // Fin du jeu
-    afficher_plateau(variable_partie.plateau);
+    afficher_plateau(variable_partie->plateau);
     printf("Jeu termine !\n\n");
-    afficher_classement(variable_partie.classement,variable_partie.nombre_joueur);
+    afficher_classement(variable_partie->classement,variable_partie->nombre_joueur);
 
     return 0;
 }
