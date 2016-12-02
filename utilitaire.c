@@ -1,26 +1,17 @@
 #include "utilitaire.h"
 
-void clear_console()  // Vide la console
-{
-    #ifdef linux  // Si on est sur linux
-        system("clear");
-    #elif _WIN32  // Sinon si on est sur windows
-        system("cls");
-    #endif
-}
-
 void afficher_plateau(int plateau[][TAILLE_PLATEAU])  // Affiche le plateau
 {
     int x,y,i;
 
-    printf(" ###### PLATEAU ######\n\n");
-    printf("  ");
+    printf("\n ###### PLATEAU ######\n\n");
+    printf("\\X");
     for (i = 0 ; i < TAILLE_PLATEAU ; i++)
     {
         printf(" %d",i);  // Affichage coordonnée en abscisse
     }
 
-    printf("\n  ");
+    printf("\nY ");
 
     for (i = 0 ; i < TAILLE_PLATEAU ; i++)
     {
@@ -102,7 +93,7 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU]) //Plac
     {
         #pragma omp section // Processus génération des pions du joueur 1
         {
-            printf("[INFO] Generation joueur 1 par le thread: %d\n",omp_get_thread_num() );
+            printf("[INFO] Generation des pions du joueur 1 par le thread: %d\n",omp_get_thread_num() );
             Pions_joueur pions_1 = {    1,  // Numéro du joueur
                                         0, taille,  // Données des coordonnées x
                                         0, taille,  // Données des coordonnées y
@@ -113,7 +104,7 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU]) //Plac
 
         #pragma omp section // Processus génération des pions du joueur 2
         {
-            printf("[INFO] Generation joueur 2 par le thread: %d\n",omp_get_thread_num() );
+            printf("[INFO] Generation des pions du joueur 2 par le thread: %d\n",omp_get_thread_num() );
             Pions_joueur pions_2 = {    2,  // Numéro du joueur
                                         TAILLE_PLATEAU - 1, TAILLE_PLATEAU, // Données des coordonnées x
                                         TAILLE_PLATEAU - taille, TAILLE_PLATEAU,  // Données des coordonnées y
@@ -126,7 +117,7 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU]) //Plac
         {
             if (nombre_joueur == 4) // On ne génère pas si on a pas choisi 4 joueurs
             {
-                printf("[INFO] Generation joueur 3 par le thread: %d\n",omp_get_thread_num() );
+                printf("[INFO] Generation des pions du joueur 3 par le thread: %d\n",omp_get_thread_num() );
             	Pions_joueur pions_3 = { 3,  // Numéro du joueur
             					                 TAILLE_PLATEAU - taille, TAILLE_PLATEAU,  // Données des coordonnées x
                                        0, taille, // Données des coordonnées y
@@ -140,7 +131,7 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU]) //Plac
         {
             if (nombre_joueur == 4) // On ne génère pas si on a pas choisi 4 joueurs
             {
-                printf("[INFO] Generation joueur 4 par le thread: %d\n",omp_get_thread_num() );
+                printf("[INFO] Generation des pions du joueur 4 par le thread: %d\n",omp_get_thread_num() );
             	Pions_joueur pions_4 = {  4, // Numéro du joueur
                                         0, 1, // Données des coordonnées x
                                         TAILLE_PLATEAU - taille, TAILLE_PLATEAU,  // Données des coordonnées y

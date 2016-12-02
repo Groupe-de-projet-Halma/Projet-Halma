@@ -1,7 +1,6 @@
 #ifndef PARTIE_H
 #define PARTIE_H
 
-#include "utilitaire.h"
 #include "jeu.h"
 
 int lancement_partie(); // Lance la partie
