@@ -4,6 +4,8 @@ void afficher_menu()  // Affiche le menu
 {
   clear_console();
 
+  /* Titre principal */
+
   printf("\n _   _       _                   _____                      \n");
   printf("| | | |     | |                 |  __ \\                      \n");
   printf("| |_| | __ _| |_ __ ___   __ _  | |  \\/ __ _ _ __ ___   ___  \n");
@@ -12,6 +14,8 @@ void afficher_menu()  // Affiche le menu
   printf("\\_| |_/\\__,_|_|_| |_| |_|\\__,_|  \\____/\\__,_|_| |_| |_|\\___| \n");
 
   printf("\n\nby Tancelin MAZZOTTI & Camille LANGE\n\n");
+
+  /* Menu */
 
   printf("************* MENU ***************\n");
   printf("* 1 : Lancer une nouvelle partie *\n");
@@ -42,7 +46,7 @@ void menu ()  // Menu d'acceuil
 
   if (choix == 1) // Lancement d'une nouvelle partie
   {
-    variable_partie.nombre_joueur = choix_nombre_joueur();
+    variable_partie.nombre_joueur = choix_nombre_joueur();  // On créer un nouveau terrain
     generation_terrain(&variable_partie);
 
     lancement_partie(&variable_partie);
@@ -66,7 +70,7 @@ void menu ()  // Menu d'acceuil
     }
   }
 
-  else if (choix == 3)  // Exposé des règles du jeu + demande à l'utilisateur si il veux faire une nouvelle partie ou bien reprendre la dernière partie faite
+  else if (choix == 3)  // Exposé des règles du jeu + retour au menu
   {
     regles();
     menu();
@@ -93,7 +97,7 @@ void regles() // Affiche les règles du jeu
 
   printf("Appuyez sur entrée pour quitter et revenir au menu\n");
   vider_buffer();
-  while(getchar() != '\n');
+  while(getchar() != '\n'); // On "met en pause" le temps que l'utilisateur puisse lire les règles
 }
 
 void recommencer(DonneesPartie *variable_partie)  // Demande si l'utilisateur veux recommencer le jeu
