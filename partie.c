@@ -52,7 +52,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
 
     if (variable_partie->num_joueur == 1) {
 
-      Test_fin joueur1 = {  TAILLE_PLATEAU - 1, TAILLE_PLATEAU, // Données des coordonnées x
+      Pions_joueur joueur1 = {  TAILLE_PLATEAU - 1, TAILLE_PLATEAU, // Données des coordonnées x
                             TAILLE_PLATEAU - taille, TAILLE_PLATEAU,  // Données des coordonnées y
                             1, -1 // Données nécessaire au if de fin_joueur
                           };
@@ -61,7 +61,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
 
     } else if (variable_partie->num_joueur == 2) {
 
-      Test_fin joueur2 = {  0, taille,  // Données des coordonnées x
+      Pions_joueur joueur2 = {  0, taille,  // Données des coordonnées x
                             0, taille,  // Données des coordonnées y
                             0, -1 // Données nécessaire au if de fin_joueur
                           };
@@ -70,7 +70,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
 
     } else if (variable_partie->num_joueur == 3 ) {
 
-      Test_fin joueur3 = {	0, 1,  // Données des coordonnées x
+      Pions_joueur joueur3 = {	0, 1,  // Données des coordonnées x
                             TAILLE_PLATEAU - taille, TAILLE_PLATEAU,  // Données des coordonnées y
                             0, 1  // Données nécessaire au if de fin_joueur
                           };
@@ -79,7 +79,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
 
     } else if (variable_partie->num_joueur == 4 ) {
 
-      Test_fin joueur4 = {  TAILLE_PLATEAU - taille, TAILLE_PLATEAU,	// Données des coordonnées x
+      Pions_joueur joueur4 = {  TAILLE_PLATEAU - taille, TAILLE_PLATEAU,	// Données des coordonnées x
                             0, taille,  // Données des coordonnées y
                             1, 1  // Données nécessaire au if de fin_joueur
                           };
