@@ -78,7 +78,6 @@ int charger(DonneesPartie *donnees_a_charger)
 
     else
     {
-        printf("Erreur ouverture de fichier sauvegarde\n");
         return 0;
     }
 }

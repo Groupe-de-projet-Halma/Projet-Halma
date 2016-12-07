@@ -2,7 +2,16 @@
 
 void afficher_menu()  // Affiche le menu
 {
-  printf("     ***** HALMA GAME *****\n\nby Tancelin MAZZOTTI & Camille LANGE\n\n");
+  clear_console();
+
+printf("\n _   _       _                   _____                      \n");
+printf("| | | |     | |                 |  __ \\                      \n");
+printf("| |_| | __ _| |_ __ ___   __ _  | |  \\/ __ _ _ __ ___   ___  \n");
+printf("|  _  |/ _` | | '_ ` _ \\ / _` | | | __ / _` | '_ ` _ \\ / _ \\ \n");
+printf("| | | | (_| | | | | | | | (_| | | |_\\ \\ (_| | | | | | |  __/ \n");
+printf("\\_| |_/\\__,_|_|_| |_| |_|\\__,_|  \\____/\\__,_|_| |_| |_|\\___| \n");
+
+  printf("\n\nby Tancelin MAZZOTTI & Camille LANGE\n\n");
 
   printf("************* MENU ***************\n");
   printf("* 1 : Lancer une nouvelle partie *\n");
@@ -34,50 +43,35 @@ void menu ()  // Menu d'acceuil
   if (choix == 1) // Lancement d'une nouvelle partie
   {
     variable_partie.nombre_joueur = choix_nombre_joueur();
-    generation_terrain(variable_partie.nombre_joueur, variable_partie.plateau);
+    generation_terrain(&variable_partie);
 
     lancement_partie(&variable_partie);
     recommencer(&variable_partie);
 
   }
+
   else if (choix == 2)  // Chargement de la dernière partie jouée
   {
-    charger(&variable_partie);
-    lancement_partie(&variable_partie);
-    recommencer(&variable_partie);
-
+    if(charger(&variable_partie) != 0)  // Test de la présence d'un fichier de chargement valide
+    {
+      clear_console();
+      lancement_partie(&variable_partie);
+      recommencer(&variable_partie);
+    }
+    else
+    {
+      clear_console();
+      menu();
+      printf("Erreur ouverture de fichier sauvegarde\n"); // Message d'erreur en cas de mauvais fichier de chargement
+    }
   }
+
   else if (choix == 3)  // Exposé des règles du jeu + demande à l'utilisateur si il veux faire une nouvelle partie ou bien reprendre la dernière partie faite
   {
     regles();
-
-    do
-    {
-
-      printf("\nVoulez vous faire une nouvelle partie ou bien reprendre la dernière partie faite ? [1 : oui / 0 : non] ");
-
-      if(scanf("%d", &choix) != 1)  // Test si la valeur est un entier
-          vider_buffer();
-
-      if (choix == 1) // Lancement d'une nouvelle partie
-      {
-        variable_partie.nombre_joueur = choix_nombre_joueur();
-        generation_terrain(variable_partie.nombre_joueur, variable_partie.plateau);
-
-        lancement_partie(&variable_partie);
-        recommencer(&variable_partie);
-
-      }
-      else  // Chargement de la dernière partie jouée
-      {
-        charger(&variable_partie);
-        lancement_partie(&variable_partie);
-        recommencer(&variable_partie);
-      }
-
-     } while (choix != 1 && choix != 0);
-
+    menu();
   }
+
   else if (choix == 4)
     clear_console();
 }
@@ -96,6 +90,10 @@ void regles() // Affiche les règles du jeu
   printf("NOTE : Après s'être déplacé en sautant un pion, le joueur peut (s'il le souhaite) recommencer et sauter un autre pion.\n       Et ainsi de suite jusqu'à ce qu'il ne puisse plus sauter de pions. Mais il n'a pas le droit de faire un déplacement sans sauter de pion.\n\n");
   printf("Le Halma peut se jouer à 2 ou 4 joueurs.\n\n");
   printf("Bonne chance !\n");
+
+  printf("Appuyez sur entrée pour quitter et revenir au menu\n");
+  vider_buffer();
+  while(getchar() != '\n');
 }
 
 void recommencer(DonneesPartie *variable_partie)  // Demande si l'utilisateur veux recommencer le jeu
@@ -104,14 +102,11 @@ void recommencer(DonneesPartie *variable_partie)  // Demande si l'utilisateur ve
 
   do  // Test sécurisé
   {
-      printf("\nVoulez-vous recommencer le jeu ? (1 = oui et 0 = non): ");
+      printf("\nVoulez-vous retourner au menu ? (1 = oui et 0 = non): ");
       if(scanf("%d", &recommencer) != 1) // Test si la valeur est un entier
-          vider_buffer();
+        vider_buffer();
       if (recommencer == 1) {
-        variable_partie->nombre_joueur = choix_nombre_joueur();
-        generation_terrain(variable_partie->nombre_joueur, variable_partie->plateau);
-
-        lancement_partie(variable_partie);
+        menu();
       }
   } while (recommencer != 0  && recommencer != 1); // Test si l'entre est valide
 }

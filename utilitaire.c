@@ -12,6 +12,9 @@ void clear_console()  // Vide la console
 int choix_nombre_joueur() // Demande le nombre de joueur
 {
     int nombre_joueur;
+
+    clear_console();
+
     do
     {
         printf("Entrez le nombre de joueur (2 ou 4): ");
@@ -91,7 +94,7 @@ void afficher_classement(int classement[4],int nombre_joueur) // Affiche le clas
 
 }
 
-void generation_pions(Pions_joueur *pions, int plateau[][TAILLE_PLATEAU]) // Place les pions d'un joueur à son emplacement de départ
+void generation_pions(Pions_joueur *pions, DonneesPartie *variable_partie) // Place les pions d'un joueur à son emplacement de départ
 {
     int x, y;
 
@@ -101,7 +104,7 @@ void generation_pions(Pions_joueur *pions, int plateau[][TAILLE_PLATEAU]) // Pla
         for (x = pions->x_debut; x < pions->x_fin; x++) // x signifit les abscisses dans notre PLATEAU
         {
 
-            plateau [x][y] = pions->numero_joueur; // On change la valeur du PLATEAU
+            variable_partie->plateau [x][y] = pions->numero_joueur; // On change la valeur du PLATEAU
         }
 
         if (pions->modification == 0)	// On fait différentes incrémentations / décrémentations en fonction du joueur pour placer les pions en pyramide
@@ -112,12 +115,12 @@ void generation_pions(Pions_joueur *pions, int plateau[][TAILLE_PLATEAU]) // Pla
     }
 }
 
-void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU]) //Place les pions de tous les joueurs aux bons emplacements au départ de la partie
+void generation_terrain(DonneesPartie *variable_partie) //Place les pions de tous les joueurs aux bons emplacements au départ de la partie
 {
     int taille;
 
     // Initialisation d'une variable taille pour savoir la taille de nos pyramides de pions
-    if (nombre_joueur == 2)
+    if (variable_partie->nombre_joueur == 2)
       taille = 5;
       else taille = 3;
 
@@ -132,7 +135,7 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU]) //Plac
                                         0, taille,  // Données des coordonnées y
                                         0, -1 // Données nécessaire au if de generation_pions
                                     };
-            generation_pions(&pions_1, plateau);
+            generation_pions(&pions_1, variable_partie);
         }
 
         #pragma omp section // Processus génération des pions du joueur 2
@@ -143,12 +146,12 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU]) //Plac
                                         TAILLE_PLATEAU - taille, TAILLE_PLATEAU,  // Données des coordonnées y
                                         1, -1 // Données nécessaire au if de generation_pions
                                     };
-            generation_pions(&pions_2, plateau);
+            generation_pions(&pions_2, variable_partie);
         }
 
         #pragma omp section // Processus génération des pions du joueur 3
         {
-            if (nombre_joueur == 4) // On ne génère pas si on a pas choisi 4 joueurs
+            if (variable_partie->nombre_joueur == 4) // On ne génère pas si on a pas choisi 4 joueurs
             {
                 printf("[INFO] Generation des pions du joueur 3 par le thread: %d\n",omp_get_thread_num() );
             	Pions_joueur pions_3 = { 3,  // Numéro du joueur
@@ -156,13 +159,13 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU]) //Plac
                                        0, taille, // Données des coordonnées y
                                        1, 1 // Données nécessaire au if de generation_pions
         				                };
-                generation_pions(&pions_3, plateau);
+                generation_pions(&pions_3, variable_partie);
             }
         }
 
         #pragma omp section // Processus génération des pions du joueur 4
         {
-            if (nombre_joueur == 4) // On ne génère pas si on a pas choisi 4 joueurs
+            if (variable_partie->nombre_joueur == 4) // On ne génère pas si on a pas choisi 4 joueurs
             {
                 printf("[INFO] Generation des pions du joueur 4 par le thread: %d\n",omp_get_thread_num() );
             	Pions_joueur pions_4 = {  4, // Numéro du joueur
@@ -171,7 +174,7 @@ void generation_terrain(int nombre_joueur, int plateau[][TAILLE_PLATEAU]) //Plac
                                         0, 1  // Données nécessaire au if de generation_pions
                 				};
 
-                generation_pions(&pions_4, plateau);
+                generation_pions(&pions_4, variable_partie);
             }
         }
     }

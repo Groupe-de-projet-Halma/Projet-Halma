@@ -91,6 +91,7 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
 
 int lancement_partie(DonneesPartie *variable_partie)  // Lance la partie
 {
+
     do // Boucle pour rejouer tant que la partie n'est pas finie
     {
       variable_partie->num_joueur = joueur_suivant(variable_partie->nombre_joueur,
@@ -101,7 +102,15 @@ int lancement_partie(DonneesPartie *variable_partie)  // Lance la partie
       sauvegarde(variable_partie);
     } while(fin_partie(variable_partie) == 0);
 
+    // Supression du fichier de sauvegarde
+    #ifdef linux
+      system("rm partie.save");
+    #elif _WIN32
+      system("del partie.save");
+    #endif
+
     // Fin du jeu
+
     afficher_plateau(variable_partie->plateau);
     printf("Jeu termine !\n\n");
     afficher_classement(variable_partie->classement,variable_partie->nombre_joueur);
