@@ -30,7 +30,7 @@ void menu ()  // Menu d'acceuil
   int choix;
 
   // Initialisation de la structure nécessaire à notre partie
-  DonneesPartie variable_partie = {0,0,{{0}},{0},{0},{0},0,0};
+  DonneesPartie variable_partie = {0,0,{{0}},{0},{0},{0},0,NULL,0};
 
   afficher_menu();
 

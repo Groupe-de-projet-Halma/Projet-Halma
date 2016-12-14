@@ -65,6 +65,7 @@ void afficher_plateau(int plateau[][TAILLE_PLATEAU])  // Affiche le plateau
         {
             if(plateau[x][y] == 0)
                 printf("\033[37m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau blanc
+
             else if(plateau[x][y] == 1)
                 printf("\033[31m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau rouge
 
@@ -76,6 +77,11 @@ void afficher_plateau(int plateau[][TAILLE_PLATEAU])  // Affiche le plateau
 
             else if(plateau[x][y] == 4)
                 printf("\033[33m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau jaune
+            else if(plateau[x][y] == 5)
+            {
+                plateau[x][y] = 0;
+                printf("\033[35m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau violet
+            }
         }
         printf("\n");
     }

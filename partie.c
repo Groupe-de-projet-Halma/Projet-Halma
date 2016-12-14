@@ -4,16 +4,19 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
 {
     do
     {
-        //clear_console();
+        clear_console();
         afficher_plateau(variable_partie->plateau);
         printf("JOUEUR %d a vous de jouer ! \n\n",variable_partie->num_joueur);
 
-        if (variable_partie->pion_sauter == 0)  // Empeche le joueur de changer de pion si il a déjà fait un saut
+        do
         {
-            printf("Selectionner un pion\n");
-            selection_coordonne(variable_partie->coord_pion_selectionner);  // Selection du pion
-        }
+          printf("Selectionner un pion\n");
+          selection_coordonne(variable_partie->coord_pion_selectionner);  // Selection du pion
+        } while(test_emplacement(variable_partie->num_joueur,variable_partie->coord_pion_selectionner[0], variable_partie->coord_pion_selectionner[1], variable_partie->plateau) == 0);
 
+        prevision(variable_partie);
+
+        afficher_plateau(variable_partie->plateau);
         printf("Selectionner destination\n");
         selection_coordonne(variable_partie->coord_destination_pion); // Selection de la destinantion du pion
 
@@ -28,17 +31,16 @@ int deroulement_tour(DonneesPartie *variable_partie)  // Permet de faire un tour
             printf("\nERREUR: Deplacemnt impossible\n\n");
         else if(variable_partie->resultat_deplacement == 1)
             printf("\nDeplacemnt standard reussie\n\n");
-        else if (variable_partie->resultat_deplacement == 2)
-            printf("\nDeplacement en sautant un pion reussie\n\n");
-
 
         // Demande fin du tour en focntion du resultat du deplacemnt (à modifier avec fonctions et parametres)
         if(variable_partie->resultat_deplacement != 1)
-            if(demande_fin_tour() == 1)
-                variable_partie->resultat_deplacement = 1;
+        {
+          printf("Appuyez sur la touche 'ENTRER': ");
+          vider_buffer();
+          while(getchar() != '\n');
+        }
 
     }while (variable_partie->resultat_deplacement != 1); // Tant que le deplacement n'est pas valide
-    variable_partie->pion_sauter = 0;
     variable_partie->resultat_deplacement = 0;
 
     // Test si le joueur a fini et initialisation des différentes structures en fonction numéro du joueur
