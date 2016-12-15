@@ -44,40 +44,44 @@ void menu ()  // Menu d'acceuil
 
   /* Test pour savoir ce que l'utilisateur veut faire */
 
-  if (choix == 1) // Lancement d'une nouvelle partie
+  switch (choix)
   {
-    variable_partie.nombre_joueur = choix_nombre_joueur();  // On créer un nouveau terrain
-    generation_terrain(&variable_partie);
+    case 1 : // Lancement d'une nouvelle partie
+             variable_partie.nombre_joueur = choix_nombre_joueur();  // On créer un nouveau terrain
+             generation_terrain(&variable_partie);
 
-    lancement_partie(&variable_partie);
-    recommencer(&variable_partie);
+             lancement_partie(&variable_partie);
+             recommencer(&variable_partie);
+             break;
 
+    case 2 : // Chargement de la dernière partie jouée
+             if(charger(&variable_partie) != 0)  // Test de la présence d'un fichier de chargement valide
+              {
+                clear_console();
+                lancement_partie(&variable_partie);
+                recommencer(&variable_partie);
+              }
+             else
+              {
+                clear_console();
+                menu();
+                printf("Erreur ouverture de fichier sauvegarde\n"); // Message d'erreur en cas de mauvais fichier de chargement
+              }
+              break;
+
+    case 3 : // Exposé des règles du jeu + retour au menu
+             regles();
+             menu();
+             break;
+
+    case 4 : // On quitte le programme
+             clear_console();
+             break;
+
+    default : // En cas de problème dans le tri sécurisé du dessus
+              printf("Mauvaise Sélection dans le menu\n");
+              break;
   }
-
-  else if (choix == 2)  // Chargement de la dernière partie jouée
-  {
-    if(charger(&variable_partie) != 0)  // Test de la présence d'un fichier de chargement valide
-    {
-      clear_console();
-      lancement_partie(&variable_partie);
-      recommencer(&variable_partie);
-    }
-    else
-    {
-      clear_console();
-      menu();
-      printf("Erreur ouverture de fichier sauvegarde\n"); // Message d'erreur en cas de mauvais fichier de chargement
-    }
-  }
-
-  else if (choix == 3)  // Exposé des règles du jeu + retour au menu
-  {
-    regles();
-    menu();
-  }
-
-  else if (choix == 4)
-    clear_console();
 }
 
 void regles() // Affiche les règles du jeu
@@ -91,8 +95,9 @@ void regles() // Affiche les règles du jeu
   printf("A chaque tour d'un joueur il peut donc déplacer un de ces pions, 2 types de mouvements sont autorisés : \n");
   printf("- Soit le pion ne se déplace que d'une seule case sans rencontrer d'autres pions.\n");
   printf("- Soit le pion saute un autre pion et donc se déplace de 2 cases.\n\n");
-  printf("NOTE : Après s'être déplacé en sautant un pion, le joueur peut (s'il le souhaite) recommencer et sauter un autre pion.\n       Et ainsi de suite jusqu'à ce qu'il ne puisse plus sauter de pions. Mais il n'a pas le droit de faire un déplacement sans sauter de pion.\n\n");
+  printf("NOTE : Après s'être déplacé en sautant un pion, le joueur peut (s'il le souhaite) recommencer et sauter un autre pion. Et ainsi de suite jusqu'à ce qu'il ne puisse plus sauter de pions. Mais il n'a pas le droit de faire un déplacement sans sauter de pion.\n\n");
   printf("Le Halma peut se jouer à 2 ou 4 joueurs.\n\n");
+  printf("Lorsque vous allez sélectioner un pion, ces déplacements possibles (pour ce tour) s'afficheront en violet. Vous n'avez qu'à écrire les coordonnées de l'endroit où vous voulez qu'il arrive pour le déplacer (pas besoin de faire les sauts intermédiaires).\n");
   printf("Bonne chance !\n");
 
   printf("Appuyez sur entrée pour quitter et revenir au menu\n");

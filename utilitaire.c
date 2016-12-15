@@ -63,25 +63,26 @@ void afficher_plateau(int plateau[][TAILLE_PLATEAU])  // Affiche le plateau
         printf("%d| ",y); // Affichage des coordonnées en ordonnée
         for(x = 0; x < TAILLE_PLATEAU ; x++)
         {
-            if(plateau[x][y] == 0)
-                printf("\033[37m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau blanc
+          switch (plateau[x][y])
+          {
+            case 0 : printf("\033[37m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau blanc
+                     break;
 
-            else if(plateau[x][y] == 1)
-                printf("\033[31m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau rouge
+            case 1 : printf("\033[31m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau rouge
+                     break;
 
-            else if(plateau[x][y] == 2)
-                printf("\033[36m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau cyan
-
-            else if(plateau[x][y] == 3)
-                printf("\033[32m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau vert
-
-            else if(plateau[x][y] == 4)
-                printf("\033[33m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau jaune
-            else if(plateau[x][y] == 5)
-            {
-                plateau[x][y] = 0;
-                printf("\033[35m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau violet
-            }
+            case 2 : printf("\033[36m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau cyan
+                     break;
+            case 3 : printf("\033[32m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau vert
+                     break;
+            case 4 : printf("\033[33m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau jaune
+                     break;
+            case 5 : plateau[x][y] = 0;
+                     printf("\033[35m%d \033[0m",plateau[x][y]); // Affichage valeur du tableau violet
+                     break;
+            default : printf("Mauvaise valeur dans le plateau\n");  // En cas de valeur du tableau erronée
+                      break;
+          }
         }
         printf("\n");
     }

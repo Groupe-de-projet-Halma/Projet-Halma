@@ -44,26 +44,26 @@ int joueur_suivant(int nombre_joueur, int numero_joueur, int classement[])  // R
 {
     int i,j,cpt = 0,fini = 0;
     numero_joueur++;
-    if (numero_joueur > nombre_joueur)
-        numero_joueur = numero_joueur - nombre_joueur;
+    if (numero_joueur > nombre_joueur)  // Vérifit si l'on ne dépasse pas le nombre de joueur de la partie
+        numero_joueur = numero_joueur - nombre_joueur;  // On revient au premier joueur
 
-    for (i = 0; i < nombre_joueur ; i++)
+    for (i = 0; i < nombre_joueur ; i++)  // Parcours tout les joueurs
     {
-        cpt = numero_joueur + i;
-        if (cpt > nombre_joueur)
-            cpt = cpt - nombre_joueur;
+        cpt = numero_joueur + i;  // Mémerise le numéro du joueur suivant
+        if (cpt > nombre_joueur)  // Vérifit si l'on ne dépasse pas le nombre de joueur de la partie
+            cpt = cpt - nombre_joueur;  // On revient au premier joueur
 
-        for (j = 0; j < nombre_joueur; j++)
+        for (j = 0; j < nombre_joueur; j++) // Parcours tout les joueurs
         {
-            if (classement[j] == cpt)
+            if (classement[j] == cpt) // Regarde si le joueur a déjà fini de jouer
                 fini = 1;
         }
-        if(fini == 0)
-            return cpt;
-        else fini = 0;
+        if(fini == 0) // Test si le joueur à fini
+            return cpt; // On dit que c'est à ce joueur de jouer
+        else fini = 0;  // On réinitialise la variable fini et on test le joueur suivant
     }
 
-    return 0;
+    return 0; // Tous les joueurs ont fini
 }
 
 void generation_classement(DonneesPartie *variable_partie) // Remplis le tableau du classement
@@ -81,7 +81,7 @@ void generation_classement(DonneesPartie *variable_partie) // Remplis le tableau
 
       if (variable_partie->classement[variable_partie->nombre_joueur - 2] != 0) // On regarde si on a mis l'avant dernier joueur dans le tableau pour ajouter le dernier
       {
-        variable_partie->classement[variable_partie->nombre_joueur - 1] = total - somme_classement(variable_partie);
+        variable_partie->classement[variable_partie->nombre_joueur - 1] = total - somme_classement(variable_partie);  // On ajoute le joueur qui n'a pas fini
       }
 
     break;
@@ -94,7 +94,7 @@ int somme_classement(DonneesPartie *variable_partie)  // Fait la somme des valeu
   int i, somme = 0;
 
   for (i = 0; i < variable_partie->nombre_joueur - 1; i++) {
-    somme += variable_partie->classement[i];
+    somme += variable_partie->classement[i];  // On calcul la somme de toutes les cases du tableau
   }
 
   return somme;
@@ -124,18 +124,18 @@ void fin_joueur(Pions_joueur *fin, DonneesPartie *variable_partie)  // Test si l
 
 
 
-int recherche_valeur_tableau(int **tableau,int taille, int coord_x, int coord_y)
+int recherche_valeur_tableau(int **tableau,int taille, int coord_x, int coord_y) // Vérifit si l'on avait déjà trouvé la destination auparavant
 {
   int i = 0;
-  for (i = 0; i < taille; i++)
+  for (i = 0; i < taille; i++)  // On parcours le tableau
   {
-    if (tableau[i][0] == coord_x && tableau[i][1] == coord_y)
+    if (tableau[i][0] == coord_x && tableau[i][1] == coord_y) // Test si les coordonées sont déjà dans le tableau
       return 0;
   }
-  return 1;
+  return 1; // Les coordonées ne sont pas dans le tableau
 }
 
-void recherche_destination( DonneesPartie *variable_partie, int coord_selectionner[2], int deplacement)
+void recherche_destination( DonneesPartie *variable_partie, int coord_selectionner[2], int deplacement) // Cherche les destinations possibles autour d'une coordonnée (en sautant un pion ou non)
 {
   int y,x; // variable de boucle
   int destination_x; // abscisse de coordonne de destiantion
@@ -195,27 +195,29 @@ void recherche_destination( DonneesPartie *variable_partie, int coord_selectionn
   }
 }
 
-void prevision(DonneesPartie *variable_partie)
+void prevision(DonneesPartie *variable_partie)  // Prévoit toutes les destinations possibles d'un pion
 {
-  variable_partie->taille_tableau_destination = 0;
-  free(variable_partie->tableau_destination);
-  variable_partie->tableau_destination = NULL;
-  variable_partie->tableau_destination = malloc(0 * sizeof(int*));
+  /* On sécurise le tableau */
+
+  variable_partie->taille_tableau_destination = 0;  // On réinitialise la taille du tableau à 0
+  free(variable_partie->tableau_destination); // On libère la mémoire du tableau
+  variable_partie->tableau_destination = NULL;  // On initialise le pointeur à NULL
+  variable_partie->tableau_destination = malloc(0 * sizeof(int*));  // On recréer un tableau de taille 0
 
   int i = 0;
 
-  recherche_destination(variable_partie,variable_partie->coord_pion_selectionner,2);
+  recherche_destination(variable_partie,variable_partie->coord_pion_selectionner,2);  // On recherche les destinations qui nécessitent un saut
 
-  for(i = 0 ; i < variable_partie->taille_tableau_destination; i++)
+  for(i = 0 ; i < variable_partie->taille_tableau_destination; i++) // On parcours l'intégralité des destinations trouvées précédement
   {
-    recherche_destination(variable_partie,variable_partie->tableau_destination[i],2);
+    recherche_destination(variable_partie,variable_partie->tableau_destination[i],2); // On regarde si l'on peut encore sauter après
   }
 
-  recherche_destination(variable_partie,variable_partie->coord_pion_selectionner,1);
+  recherche_destination(variable_partie,variable_partie->coord_pion_selectionner,1);  // On recherche les destinations qui ne nécessitent pas un saut
 
-  for (i = 0; i < variable_partie->taille_tableau_destination ; i++)
+  for (i = 0; i < variable_partie->taille_tableau_destination ; i++)  // On parcours toutes les destinations trouvées
   {
-    variable_partie->plateau[variable_partie->tableau_destination[i][0]][variable_partie->tableau_destination[i][1]] = 5;
+    variable_partie->plateau[variable_partie->tableau_destination[i][0]][variable_partie->tableau_destination[i][1]] = 5; // On écrit sur le plateau les sauts possibles
   }
 
 }
